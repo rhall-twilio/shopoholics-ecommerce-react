@@ -5,6 +5,7 @@ import { getPhones } from "../selectors/Phones";
 import { Link } from "react-router";
 import R from "ramda";
 import { addPhoneToBasket } from "../actions/Phones";
+import phone from "../reducers/phone";
 
 class Phones extends React.Component {
   componentDidMount() {
@@ -29,6 +30,16 @@ class Phones extends React.Component {
             <button
               className="btn btn-primary"
               onClick={() => addPhoneToBasket(phone.id)}
+              onMouseDown={() =>
+                analytics.track("Product Added", {
+                  product: {
+                    product_id: phone.id,
+                    product_name: phone.name,
+                    product_value: phone.price,
+                    product_category: "phone",
+                  },
+                })
+              }
             >
               Buy Now
             </button>

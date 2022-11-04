@@ -56,6 +56,16 @@ class Phone extends React.Component {
           <h4>{phone.name}</h4>
           <p>{phone.description}</p>
         </div>
+        <script>
+          {analytics.track("Product Viewed", {
+            product: {
+              product_id: phone.id,
+              product_name: phone.name,
+              product_value: phone.price,
+              product_category: "phone",
+            },
+          })}
+        </script>
       </div>
     );
   };
@@ -79,6 +89,18 @@ class Phone extends React.Component {
           type="button"
           className="btn btn-success btn-block"
           onClick={() => addPhoneToBasket(phone.id)}
+          onMouseDown={() => (
+            <script>
+              {analytics.track("Product Added", {
+                product: {
+                  product_id: phone.id,
+                  product_name: phone.name,
+                  product_value: phone.price,
+                  product_category: "phone",
+                },
+              })}
+            </script>
+          )}
         >
           Add To Cart
         </button>

@@ -1,3 +1,4 @@
+import { count } from "ramda";
 import {
   fetchPhones as fetchPhonesApi,
   loadMore as loadMoreApi,
@@ -118,6 +119,12 @@ export const removePhoneFromBasket = (id) => async (dispatch) => {
   dispatch({
     type: "REMOVE_PHONE_FROM_BASKET",
     payload: id,
+  });
+  analytics.track("Product Removed", {
+    product: {
+      product_id: id,
+      product_category: "phone",
+    },
   });
 };
 

@@ -14,7 +14,7 @@ export const getPhones = (state, ownProps) => {
   const activeCategoryId = getActiveCategoryId(ownProps);
   // console.log("activeCategoryId " , activeCategoryId);
   const applyCategory = (item) => {
-    // console.log("Item ", item);
+    //console.log("Item ", item);
     return R.equals(activeCategoryId, R.prop("categoryId", item));
   };
   const applySearch = (item) => {

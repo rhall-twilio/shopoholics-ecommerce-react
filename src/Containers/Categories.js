@@ -6,6 +6,7 @@ import { compose } from "redux";
 import classNames from "classnames";
 import R from "ramda";
 
+const phoneFilter = [];
 const Categories = (props) => {
   const { categories, activeCategoryId } = props;
   // console.log(" activeCategoryId " , activeCategoryId);
@@ -38,7 +39,12 @@ const Categories = (props) => {
   return (
     <div className="well">
       <span className="lead">Brand Filter</span>
-      <div className="list-group">
+      <div
+        className="list-group"
+        onMouseDown={() => {
+          analytics.page("Categories", {});
+        }}
+      >
         {renderAllCategory()}
         {categories.map((category, index) => {
           // console.log(category);

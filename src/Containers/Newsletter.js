@@ -39,7 +39,17 @@ class Newsletter extends React.Component {
               onChange={this.onNewsletterInputChange}
             />
             <span className="input-group-btn">
-              <button className="btn btn-default">
+              <button
+                className="btn btn-default"
+                onClick={() =>
+                  analytics.track("Account Created", {
+                    product_type: "Phone",
+                    email: this.state.emailValue,
+                    signup_type: "organic",
+                    content_type: "Newsletter",
+                  })
+                }
+              >
                 <span className="glyphicon glyphicon-envelope" />
               </button>
             </span>

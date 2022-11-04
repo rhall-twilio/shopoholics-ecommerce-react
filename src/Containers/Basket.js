@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   getTotalBasketPrice,
   getBasketPhonesWithCount,
+  getPhones,
 } from "../selectors/Phones";
 import R from "ramda";
 import {
@@ -12,6 +13,7 @@ import {
 } from "../actions/Phones";
 import { Link } from "react-router";
 import Coupon from "./Coupon";
+import phone from "../reducers/phone";
 
 const Basket = ({
   phones,
@@ -20,6 +22,7 @@ const Basket = ({
   cleanBasket,
   basketCheckout,
 }) => {
+  const phoneBasket = [];
   const isBasketEmpty = R.isEmpty(phones);
   const renderContent = () => {
     return (
@@ -49,6 +52,15 @@ const Basket = ({
                 </tr>
               ))}
             </tbody>
+            {phones.map((phone, index) =>
+              phoneBasket.push({
+                product_id: phone.id,
+                product_name: phone.name,
+                product_value: phone.price,
+                product_quantity: phone.count,
+                product_category: "phone",
+              })
+            )}
           </table>
         </div>
         {R.not(isBasketEmpty) && (
@@ -62,19 +74,50 @@ const Basket = ({
     );
   };
 
+  const phoneList = [];
   const renderSidebar = () => {
     return (
       <div>
         <Coupon />
         {R.not(isBasketEmpty) && (
           <div>
-            <button className="btn btn-danger" onClick={() => cleanBasket()}>
+            <button
+              className="btn btn-danger"
+              onClick={() => cleanBasket()}
+              onMouseDown={() =>
+                phones.map(
+                  (phone, index) =>
+                    phoneList.push({
+                      product_id: phone.id,
+                      product_name: phone.name,
+                      product_value: phone.price,
+                      product_quantity: phone.count,
+                      product_category: "phone",
+                    }),
+                  analytics.track("Cart Emptied", { product: phoneList })
+                )
+              }
+            >
               <span className="glyphicon glyphicon-trash" />
               Clean Cart
             </button>
             <button
               className="btn btn-success"
+              id="success"
               onClick={() => basketCheckout(phones)}
+              onMouseDown={() =>
+                phones.map(
+                  (phone, index) =>
+                    phoneList.push({
+                      product_id: phone.id,
+                      product_name: phone.name,
+                      product_value: phone.price,
+                      product_quantity: phone.count,
+                      product_category: "phone",
+                    }),
+                  analytics.track("Order Completed", { product: phoneList })
+                )
+              }
             >
               <span className="glyphicon glyphicon-envelope" />
               Checkout
@@ -95,6 +138,15 @@ const Basket = ({
         <div className="row">
           <div className="col-md-9">{renderContent()}</div>
           <div className="col-md-3 btn-user-checkout">{renderSidebar()}</div>
+          <script>
+            {analytics.page("Basket", {
+              cart_status: totalPrice ? "Cart Full" : "Cart Empty",
+            })}
+            ;
+            {analytics.track("Cart Viewed", {
+              product: phoneBasket,
+            })}
+          </script>
         </div>
       </div>
     </div>

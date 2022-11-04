@@ -17,17 +17,24 @@ class Coupon extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.couponCode === "SUPER-10") {
+    if (this.state.couponCode === "SEGMENT") {
       this.setState({
         couponCode: this.state.couponCode,
         message: "10% discount applied",
       });
       this.props.applyDiscount(0.9, this.state.couponCode);
+      analytics.track("Coupon Applied", {
+        coupon_name: this.state.couponCode,
+        coupon_discount: "10%",
+      });
     } else
       this.setState({
         couponCode: this.state.couponCode,
         message: "Invalid Coupon Code",
       });
+    analytics.track("Coupon Denied", {
+      coupon_name: this.state.couponCode,
+    });
   };
 
   onCouponCodeInputChange = (e) => {
