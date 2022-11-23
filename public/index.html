@@ -15,6 +15,29 @@
       })(window, document, "script", "dataLayer", "GTM-KNG8BTF");
     </script>
     <!-- End Google Tag Manager -->
+    <!-- Config gtag for Cloud Mode-->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LW0DP01W31");
+
+      // capture cid and sid
+      const cookieObjCid = new URLSearchParams(
+        document.cookie.replaceAll("&", "%26").replaceAll("; ", "&")
+      );
+      const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
+
+      const cookieObjSid = new URLSearchParams(
+        document.cookie.replaceAll("&", "%26").replaceAll("; ", "&")
+      );
+      const segSessionId = cookieObjSid
+        .get("_ga_LW0DP01W31")
+        .match(/[0-9]{9,10}$/g);
+    </script>
+    <!-- End gtag for Cloud Mode-->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -82,7 +105,7 @@
             analytics.SNIPPET_VERSION = "4.15.3";
 
             //TODO 1.1: update the following line with your write key
-            analytics.load("EzPt0wHx0WlFsErcScd9kNSGiK75b8PW");
+            analytics.load("3DCPQluBOtkLuonpeiOqCRsWYGNaYzWE");
             //analytics.load("92JvpOXgMlSmzcal6N3HoJKaz2BWWDRf");
             // Leave it here but don't do the following:
             // it will create a new anonymous Id when the page is loaded

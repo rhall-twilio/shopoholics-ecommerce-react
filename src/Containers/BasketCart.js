@@ -8,6 +8,8 @@ import {
 } from "../selectors/Phones";
 import phone from "../reducers/phone";
 
+const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
+const segSessionId = cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g);
 export const BasketCart = (props) => {
   const { totalBasketCount, totalPrice, phones } = props;
   let phoneBasket = phones.map((phone) => ({
@@ -16,30 +18,26 @@ export const BasketCart = (props) => {
     product_value: phone.price,
     product_quantity: phone.count,
     product_category: "phone",
+    product_currency: "USD",
+  }));
+  let itemBasket = phones.map((phone) => ({
+    item_id: phone.id,
+    item_name: phone.name,
+    price: phone.price,
+    quantity: phone.count,
+    item_category: "phone",
+    currency: "USD",
   }));
 
-  phoneBasket = phones.map((phone) => {
-    return {
-      product_id: phone.id,
-      product_name: phone.name,
-      product_value: phone.price,
-      product_quantity: phone.count,
-      product_category: "phone",
-    };
-  });
-
-  phones.map((phone) => {
-    phoneBasket.push({
-      product_id: phone.id,
-      product_name: phone.name,
-      product_value: phone.price,
-      product_quantity: phone.count,
-      product_category: "phone",
-    });
-  });
-
   const goToBasket = () => {
-    analytics.track("Checkout Start", { phones: phoneBasket });
+    analytics.track("Checkout Started", {
+      seg_client_id: segClientId ? segClientId[0] : undefined,
+      seg_session_id: segSessionId ? segSessionId[0] : undefined,
+      currency: "USD",
+      value: totalPrice,
+      product: phoneBasket,
+      items: itemBasket,
+    });
     browserHistory.push("/basket");
   };
 

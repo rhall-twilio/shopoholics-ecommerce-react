@@ -6,9 +6,14 @@ import R from "ramda";
 import BasketCart from "./BasketCart";
 import { Link } from "react-router";
 
+const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
+const segSessionId = cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g);
 class Phone extends React.Component {
   componentDidMount = () => {
-    window.analytics.page();
+    window.analytics.page("Phone Description", {
+      seg_client_id: segClientId ? segClientId[0] : undefined,
+      seg_session_id: segSessionId ? segSessionId[0] : undefined,
+    });
     this.props.fetchPhoneById(this.props.params.id);
   };
 
@@ -58,11 +63,14 @@ class Phone extends React.Component {
         </div>
         <script>
           {analytics.track("Product Viewed", {
+            seg_client_id: segClientId ? segClientId[0] : undefined,
+            seg_session_id: segSessionId ? segSessionId[0] : undefined,
             product: {
               product_id: phone.id,
               product_name: phone.name,
               product_value: phone.price,
               product_category: "phone",
+              product_currency: "USD",
             },
           })}
         </script>
@@ -92,11 +100,14 @@ class Phone extends React.Component {
           onMouseDown={() => (
             <script>
               {analytics.track("Product Added", {
+                seg_client_id: segClientId ? segClientId[0] : undefined,
+                seg_session_id: segSessionId ? segSessionId[0] : undefined,
                 product: {
                   product_id: phone.id,
                   product_name: phone.name,
                   product_value: phone.price,
                   product_category: "phone",
+                  product_currency: "USD",
                 },
               })}
             </script>
