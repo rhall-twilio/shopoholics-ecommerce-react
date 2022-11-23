@@ -7,6 +7,8 @@ import {
 } from "../api/fetchPhones";
 import { getRenderedPhonesLength } from "../selectors/Phones";
 
+const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
+const segSessionId = cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g);
 export const applyDiscount = (invertedDiscount, code) => (dispatch) => {
   dispatch({
     type: "APPLY_COUPON_CODE",
@@ -115,18 +117,34 @@ export const searchPhone = (text) => (dispatch) => {
   });
 };
 
-export const removePhoneFromBasket = (id) => async (dispatch) => {
-  dispatch({
-    type: "REMOVE_PHONE_FROM_BASKET",
-    payload: id,
-  });
-  analytics.track("Product Removed", {
-    product: {
-      product_id: id,
-      product_category: "phone",
-    },
-  });
-};
+export const removePhoneFromBasket =
+  (id, price, count) => async (dispatch, fetchPhoneById) => {
+    let phonePrice = price;
+    dispatch({
+      type: "REMOVE_PHONE_FROM_BASKET",
+      payload: id,
+    });
+    const removedPhoneId = id;
+    const removedPhone = fetchPhoneById(id).phone[removedPhoneId];
+    //const removedPhoneQuantity = removedPhoneId.length;
+    //console.log(removedPhoneId);
+    //console.log(fetchPhoneById(id));
+    //old implementation below, keeping because it is mapped in Segment
+    analytics.track("Product Removed", {
+      seg_client_id: segClientId ? segClientId[0] : undefined,
+      seg_session_id: segSessionId ? segSessionId[0] : undefined,
+      value: removedPhone.price,
+      currency: "USD",
+      product: {
+        product_id: id,
+        product_name: removedPhone.name,
+        product_price: price / count,
+        product_quantity: count,
+        product_category: "phone",
+        product_currency: "USD",
+      },
+    });
+  };
 
 export const cleanBasket = () => (dispatch) => {
   dispatch({

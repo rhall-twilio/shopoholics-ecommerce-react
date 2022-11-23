@@ -15,6 +15,8 @@ import { Link } from "react-router";
 import Coupon from "./Coupon";
 import phone from "../reducers/phone";
 
+const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
+const segSessionId = cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g);
 const Basket = ({
   phones,
   totalPrice,
@@ -23,6 +25,7 @@ const Basket = ({
   basketCheckout,
 }) => {
   const phoneBasket = [];
+  const itemBasket = [];
   const isBasketEmpty = R.isEmpty(phones);
   const renderContent = () => {
     return (
@@ -46,7 +49,31 @@ const Basket = ({
                   <td>
                     <span
                       className="glyphicon glyphicon-remove"
-                      onClick={() => removePhoneFromBasket(phone.id)}
+                      onClick={() => {
+                        removePhoneFromBasket(
+                          phone.id,
+                          phone.price,
+                          phone.count
+                        ),
+                          analytics.track("Product Removed v2", {
+                            seg_client_id: segClientId
+                              ? segClientId[0]
+                              : undefined,
+                            seg_session_id: segSessionId
+                              ? segSessionId[0]
+                              : undefined,
+                            value: phone.price * phone.count,
+                            currency: "USD",
+                            product: {
+                              product_id: phone.id,
+                              product_name: phone.name,
+                              product_price: phone.price,
+                              product_quantity: phone.count,
+                              product_category: "phone",
+                              product_currency: "USD",
+                            },
+                          });
+                      }}
                     ></span>
                   </td>
                 </tr>
@@ -59,6 +86,17 @@ const Basket = ({
                 product_value: phone.price,
                 product_quantity: phone.count,
                 product_category: "phone",
+                product_currency: "USD",
+              })
+            )}
+            {phones.map((phone, index) =>
+              itemBasket.push({
+                item_id: phone.id,
+                item_name: phone.name,
+                price: phone.price,
+                quantity: phone.count,
+                item_category: "phone",
+                currency: "USD",
               })
             )}
           </table>
@@ -75,6 +113,7 @@ const Basket = ({
   };
 
   const phoneList = [];
+  const itemList = [];
   const renderSidebar = () => {
     return (
       <div>
@@ -93,8 +132,29 @@ const Basket = ({
                       product_value: phone.price,
                       product_quantity: phone.count,
                       product_category: "phone",
+                      product_currency: "USD",
                     }),
-                  analytics.track("Cart Emptied", { product: phoneList })
+                  phones.map(
+                    (phone, index) =>
+                      itemList.push({
+                        item_id: phone.id,
+                        item_name: phone.name,
+                        price: phone.price,
+                        quantity: phone.count,
+                        item_category: "phone",
+                        currency: "USD",
+                      }),
+                    analytics.track("Cart Emptied", {
+                      seg_client_id: segClientId ? segClientId[0] : undefined,
+                      seg_session_id: segSessionId
+                        ? segSessionId[0]
+                        : undefined,
+                      product: phoneList,
+                      items: itemList,
+                      value: totalPrice,
+                      currency: "USD",
+                    })
+                  )
                 )
               }
             >
@@ -114,8 +174,30 @@ const Basket = ({
                       product_value: phone.price,
                       product_quantity: phone.count,
                       product_category: "phone",
+                      product_currency: "USD",
                     }),
-                  analytics.track("Order Completed", { product: phoneList })
+                  phones.map(
+                    (phone, index) =>
+                      itemList.push({
+                        item_id: phone.id,
+                        item_name: phone.name,
+                        price: phone.price,
+                        quantity: phone.count,
+                        item_category: "phone",
+                        currency: "USD",
+                      }),
+                    analytics.track("Order Completed", {
+                      seg_client_id: segClientId ? segClientId[0] : undefined,
+                      seg_session_id: segSessionId
+                        ? segSessionId[0]
+                        : undefined,
+                      cart_currency: "USD",
+                      cart_id: Math.random().toString(36).slice(2),
+                      cart_total: totalPrice,
+                      product: phoneList,
+                      items: itemList,
+                    })
+                  )
                 )
               }
             >
@@ -141,10 +223,17 @@ const Basket = ({
           <script>
             {analytics.page("Basket", {
               cart_status: totalPrice ? "Cart Full" : "Cart Empty",
+              seg_client_id: segClientId ? segClientId[0] : undefined,
+              seg_session_id: segSessionId ? segSessionId[0] : undefined,
             })}
             ;
             {analytics.track("Cart Viewed", {
+              seg_client_id: segClientId ? segClientId[0] : undefined,
+              seg_session_id: segSessionId ? segSessionId[0] : undefined,
               product: phoneBasket,
+              items: itemBasket,
+              value: totalPrice,
+              currency: "USD",
             })}
           </script>
         </div>

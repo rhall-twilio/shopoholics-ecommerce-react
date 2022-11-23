@@ -6,6 +6,8 @@ import { browserHistory } from "react-router";
 import { Link } from "react-router";
 import btoa from "btoa";
 
+const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
+const segSessionId = cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g);
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -170,6 +172,9 @@ class Profile extends React.Component {
                                   document.querySelector("input[name=username]")
                                     .value,
                                   {
+                                    seg_client_id: segClientId
+                                      ? segClientId[0]
+                                      : undefined,
                                     username: document.querySelector(
                                       "input[name=username]"
                                     ).value,
@@ -180,6 +185,12 @@ class Profile extends React.Component {
                                   }
                                 );
                                 analytics.track("Signed In", {
+                                  seg_client_id: segClientId
+                                    ? segClientId[0]
+                                    : undefined,
+                                  seg_session_id: segSessionId
+                                    ? segSessionId[0]
+                                    : undefined,
                                   username: document.querySelector(
                                     "input[name=username]"
                                   ).value,
@@ -193,6 +204,9 @@ class Profile extends React.Component {
                                   document.querySelector("input[name=username]")
                                     .value,
                                   {
+                                    seg_client_id: segClientId
+                                      ? segClientId[0]
+                                      : undefined,
                                     first_name: document.querySelector(
                                       "input[name=firstName]"
                                     ).value,
@@ -209,6 +223,12 @@ class Profile extends React.Component {
                                   }
                                 );
                                 analytics.track("Signed Up", {
+                                  seg_client_id: segClientId
+                                    ? segClientId[0]
+                                    : undefined,
+                                  seg_session_id: segSessionId
+                                    ? segSessionId[0]
+                                    : undefined,
                                   username: document.querySelector(
                                     "input[name=username]"
                                   ).value,
@@ -235,6 +255,12 @@ class Profile extends React.Component {
                           user_status: this.state.isRegisteredValue
                             ? "Login"
                             : "Register",
+                          seg_client_id: segClientId
+                            ? segClientId[0]
+                            : undefined,
+                          seg_session_id: segSessionId
+                            ? segSessionId[0]
+                            : undefined,
                         })
                       : undefined}
                   </form>
