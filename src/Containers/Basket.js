@@ -114,6 +114,7 @@ const Basket = ({
 
   const phoneList = [];
   const itemList = [];
+  const cart_id_value = Math.random().toString(36).slice(2);
   const renderSidebar = () => {
     return (
       <div>
@@ -153,6 +154,13 @@ const Basket = ({
                       items: itemList,
                       value: totalPrice,
                       currency: "USD",
+                      //GTM Datalayer config ecommerce object required
+                      ecommerce: {
+                        affiliation: "Demo Phone",
+                        currency: "USD",
+                        value: totalPrice,
+                        items: itemList,
+                      },
                     })
                   )
                 )
@@ -192,10 +200,18 @@ const Basket = ({
                         ? segSessionId[0]
                         : undefined,
                       cart_currency: "USD",
-                      cart_id: Math.random().toString(36).slice(2),
+                      cart_id: cart_id_value,
                       cart_total: totalPrice,
                       product: phoneList,
                       items: itemList,
+                      //GTM Datalayer config ecommerce object required
+                      ecommerce: {
+                        affiliation: "Demo Phone",
+                        currency: "USD",
+                        transaction_id: cart_id_value,
+                        value: totalPrice,
+                        items: itemList,
+                      },
                     })
                   )
                 )
@@ -234,6 +250,13 @@ const Basket = ({
               items: itemBasket,
               value: totalPrice,
               currency: "USD",
+              //GTM Datalayer config ecommerce object required
+              ecommerce: {
+                affiliation: "Demo Phone",
+                currency: "USD",
+                value: totalPrice,
+                items: itemBasket,
+              },
             })}
           </script>
         </div>

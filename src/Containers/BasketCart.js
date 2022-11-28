@@ -37,6 +37,13 @@ export const BasketCart = (props) => {
       value: totalPrice,
       product: phoneBasket,
       items: itemBasket,
+      //GTM Datalayer config ecommerce object required
+      ecommerce: {
+        affiliation: "Demo Phone",
+        currency: "USD",
+        value: totalPrice,
+        items: itemBasket,
+      },
     });
     browserHistory.push("/basket");
   };
