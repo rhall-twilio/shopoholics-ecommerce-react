@@ -72,6 +72,22 @@ const Basket = ({
                               product_category: "phone",
                               product_currency: "USD",
                             },
+                            //GTM Ecommerce Object Required for Datalayer
+                            ecommerce: {
+                              currency: "USD",
+                              value: phone.price * phone.count,
+                              items: [
+                                {
+                                  affiliation: "Demo Phone",
+                                  item_id: phone.id,
+                                  item_name: phone.name,
+                                  price: phone.price,
+                                  quantity: phone.count,
+                                  item_category: "phone",
+                                  currency: "USD",
+                                },
+                              ],
+                            },
                           });
                       }}
                     ></span>

@@ -72,6 +72,21 @@ class Phone extends React.Component {
               product_category: "phone",
               product_currency: "USD",
             },
+            //GTM Ecommerce Object Required for Datalayer
+            ecommerce: {
+              currency: "USD",
+              value: phone.price,
+              items: [
+                {
+                  affiliation: "Demo Phone",
+                  item_id: phone.id,
+                  item_name: phone.name,
+                  price: phone.price,
+                  item_category: "phone",
+                  currency: "USD",
+                },
+              ],
+            },
           })}
         </script>
       </div>
