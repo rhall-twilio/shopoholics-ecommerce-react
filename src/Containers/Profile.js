@@ -175,6 +175,8 @@ class Profile extends React.Component {
                                     seg_client_id: segClientId
                                       ? segClientId[0]
                                       : undefined,
+                                    seg_no_cid_session:
+                                      localStorage.getItem("cidSession"),
                                     username: document.querySelector(
                                       "input[name=username]"
                                     ).value,
@@ -191,6 +193,8 @@ class Profile extends React.Component {
                                   seg_session_id: segSessionId
                                     ? segSessionId[0]
                                     : undefined,
+                                  seg_no_cid_session:
+                                    localStorage.getItem("cidSession"),
                                   username: document.querySelector(
                                     "input[name=username]"
                                   ).value,
@@ -207,6 +211,8 @@ class Profile extends React.Component {
                                     seg_client_id: segClientId
                                       ? segClientId[0]
                                       : undefined,
+                                    seg_no_cid_session:
+                                      localStorage.getItem("cidSession"),
                                     first_name: document.querySelector(
                                       "input[name=firstName]"
                                     ).value,
@@ -229,6 +235,8 @@ class Profile extends React.Component {
                                   seg_session_id: segSessionId
                                     ? segSessionId[0]
                                     : undefined,
+                                  seg_no_cid_session:
+                                    localStorage.getItem("cidSession"),
                                   username: document.querySelector(
                                     "input[name=username]"
                                   ).value,
@@ -261,6 +269,8 @@ class Profile extends React.Component {
                           seg_session_id: segSessionId
                             ? segSessionId[0]
                             : undefined,
+                          seg_no_cid_session:
+                            localStorage.getItem("cidSession"),
                         })
                       : undefined}
                   </form>
