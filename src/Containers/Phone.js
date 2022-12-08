@@ -13,6 +13,7 @@ class Phone extends React.Component {
     window.analytics.page("Phone Description", {
       seg_client_id: segClientId ? segClientId[0] : undefined,
       seg_session_id: segSessionId ? segSessionId[0] : undefined,
+      seg_no_cid_session: localStorage.getItem("cidSession"),
     });
     this.props.fetchPhoneById(this.props.params.id);
   };
@@ -65,6 +66,7 @@ class Phone extends React.Component {
           {analytics.track("Product Viewed", {
             seg_client_id: segClientId ? segClientId[0] : undefined,
             seg_session_id: segSessionId ? segSessionId[0] : undefined,
+            seg_no_cid_session: localStorage.getItem("cidSession"),
             product: {
               product_id: phone.id,
               product_name: phone.name,
@@ -117,6 +119,7 @@ class Phone extends React.Component {
               {analytics.track("Product Added", {
                 seg_client_id: segClientId ? segClientId[0] : undefined,
                 seg_session_id: segSessionId ? segSessionId[0] : undefined,
+                seg_no_cid_session: localStorage.getItem("cidSession"),
                 product: {
                   product_id: phone.id,
                   product_name: phone.name,

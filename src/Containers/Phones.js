@@ -9,12 +9,23 @@ import phone from "../reducers/phone";
 
 const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
 const segSessionId = cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g);
+let pseudoSessionId = Date.now().toString().substring(0, 10);
+sessionStorage.getItem("newSession") === null
+  ? sessionStorage.setItem("newSession", "yes")
+  : sessionStorage.setItem("newSession", "no");
+//console.log("session status " + sessionStorage.getItem("newSession"));
+sessionStorage.getItem("newSession") === null || "yes"
+  ? localStorage.setItem("cidSession", pseudoSessionId)
+  : localStorage.getItem("cidSession");
 class Phones extends React.Component {
   componentDidMount() {
-    window.analytics.page({
+    window.analytics.page("Homepage", {
       seg_client_id: segClientId ? segClientId[0] : undefined,
       seg_session_id: segSessionId ? segSessionId[0] : undefined,
+      seg_no_cid_session: localStorage.getItem("cidSession"),
+      seg_is_new_session: sessionStorage.getItem("newSession"),
     });
+    sessionStorage.setItem("newSession", "no");
     this.props.fetchPhones();
     this.props.fetchCategories();
   }
@@ -39,6 +50,7 @@ class Phones extends React.Component {
                 analytics.track("Product Added", {
                   seg_client_id: segClientId ? segClientId[0] : undefined,
                   seg_session_id: segSessionId ? segSessionId[0] : undefined,
+                  seg_no_cid_session: localStorage.getItem("cidSession"),
                   product: {
                     product_id: phone.id,
                     product_name: phone.name,

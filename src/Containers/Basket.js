@@ -62,6 +62,8 @@ const Basket = ({
                             seg_session_id: segSessionId
                               ? segSessionId[0]
                               : undefined,
+                            seg_no_cid_session:
+                              localStorage.getItem("cidSession"),
                             value: phone.price * phone.count,
                             currency: "USD",
                             product: {
@@ -166,6 +168,7 @@ const Basket = ({
                       seg_session_id: segSessionId
                         ? segSessionId[0]
                         : undefined,
+                      seg_no_cid_session: localStorage.getItem("cidSession"),
                       product: phoneList,
                       items: itemList,
                       value: totalPrice,
@@ -215,6 +218,7 @@ const Basket = ({
                       seg_session_id: segSessionId
                         ? segSessionId[0]
                         : undefined,
+                      seg_no_cid_session: localStorage.getItem("cidSession"),
                       cart_currency: "USD",
                       cart_id: cart_id_value,
                       cart_total: totalPrice,
@@ -257,11 +261,13 @@ const Basket = ({
               cart_status: totalPrice ? "Cart Full" : "Cart Empty",
               seg_client_id: segClientId ? segClientId[0] : undefined,
               seg_session_id: segSessionId ? segSessionId[0] : undefined,
+              seg_no_cid_session: localStorage.getItem("cidSession"),
             })}
             ;
             {analytics.track("Cart Viewed", {
               seg_client_id: segClientId ? segClientId[0] : undefined,
               seg_session_id: segSessionId ? segSessionId[0] : undefined,
+              seg_no_cid_session: localStorage.getItem("cidSession"),
               product: phoneBasket,
               items: itemBasket,
               value: totalPrice,
