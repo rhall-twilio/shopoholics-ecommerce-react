@@ -175,6 +175,8 @@ class Profile extends React.Component {
                                     seg_client_id: segClientId
                                       ? segClientId[0]
                                       : undefined,
+                                    seg_no_cid_session:
+                                      localStorage.getItem("cidSession"),
                                     username: document.querySelector(
                                       "input[name=username]"
                                     ).value,
