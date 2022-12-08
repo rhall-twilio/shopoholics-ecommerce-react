@@ -180,6 +180,8 @@ class Profile extends React.Component {
                                     username: document.querySelector(
                                       "input[name=username]"
                                     ).value,
+                                    seg_no_cid_session:
+                                      localStorage.getItem("cidSession"),
                                     signup_source: "ecommerce",
                                     platform: "app",
                                     user_status: "logged in",
