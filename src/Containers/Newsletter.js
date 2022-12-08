@@ -46,6 +46,7 @@ class Newsletter extends React.Component {
                 onClick={() => {
                   analytics.identify(null, {
                     seg_client_id: segClientId ? segClientId[0] : undefined,
+                    seg_no_cid_session: localStorage.getItem("cidSession"),
                     email: this.state.emailValue,
                     signup_source: "newsletter",
                     platform_111422: "app",
@@ -54,6 +55,7 @@ class Newsletter extends React.Component {
                   analytics.track("Account Created", {
                     seg_client_id: segClientId ? segClientId[0] : undefined,
                     seg_session_id: segSessionId ? segSessionId[0] : undefined,
+                    seg_no_cid_session: localStorage.getItem("cidSession"),
                     product_type: "phone",
                     email: this.state.emailValue,
                     signup_type: "organic",

@@ -58,6 +58,7 @@ class Coupon extends React.Component {
                   analytics.track("Coupon Added", {
                     seg_client_id: segClientId ? segClientId[0] : undefined,
                     seg_session_id: segSessionId ? segSessionId[0] : undefined,
+                    seg_no_cid_session: localStorage.getItem("cidSession"),
                     coupon_status:
                       this.state.couponCode === "SEGMENT"
                         ? "Applied"

@@ -33,6 +33,7 @@ export const BasketCart = (props) => {
     analytics.track("Checkout Started", {
       seg_client_id: segClientId ? segClientId[0] : undefined,
       seg_session_id: segSessionId ? segSessionId[0] : undefined,
+      seg_no_cid_session: localStorage.getItem("cidSession"),
       currency: "USD",
       value: totalPrice,
       product: phoneBasket,
