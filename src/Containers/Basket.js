@@ -98,26 +98,6 @@ const Basket = ({
                 </tr>
               ))}
             </tbody>
-            {phones.map((phone, index) =>
-              phoneBasket.push({
-                product_id: phone.id,
-                product_name: phone.name,
-                product_value: phone.price,
-                product_quantity: phone.count,
-                product_category: "phone",
-                product_currency: "USD",
-              })
-            )}
-            {phones.map((phone, index) =>
-              itemBasket.push({
-                item_id: phone.id,
-                item_name: phone.name,
-                price: phone.price,
-                quantity: phone.count,
-                item_category: "phone",
-                currency: "USD",
-              })
-            )}
           </table>
         </div>
         {R.not(isBasketEmpty) && (
@@ -130,6 +110,27 @@ const Basket = ({
       </div>
     );
   };
+  
+  phones.map((phone, index) =>
+    phoneBasket.push({
+      product_id: phone.id,
+      product_name: phone.name,
+      product_value: phone.price,
+      product_quantity: phone.count,
+      product_category: "phone",
+      product_currency: "USD",
+    })
+  )
+  phones.map((phone, index) =>
+    itemBasket.push({
+      item_id: phone.id,
+      item_name: phone.name,
+      price: phone.price,
+      quantity: phone.count,
+      item_category: "phone",
+      currency: "USD",
+    })
+  )
 
   const phoneList = [];
   const itemList = [];
