@@ -15,8 +15,9 @@ import { Link } from "react-router";
 import Coupon from "./Coupon";
 import phone from "../reducers/phone";
 
-const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
-const segSessionId = cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g);
+
+const segClientId = cookieObjCid !== null ? cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g) : undefined;
+const segSessionId = cookieObjSid !== null ? cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g) : undefined;
 const Basket = ({
   phones,
   totalPrice,
@@ -133,6 +134,28 @@ const Basket = ({
   const phoneList = [];
   const itemList = [];
   const cart_id_value = Math.random().toString(36).slice(2);
+  analytics.page("Basket", {
+    cart_status: totalPrice ? "Cart Full" : "Cart Empty",
+    seg_client_id: segClientId ? segClientId[0] : undefined,
+    seg_session_id: segSessionId ? segSessionId[0] : undefined,
+    seg_no_cid_session: localStorage.getItem("cidSession"),
+  })
+
+  analytics.track("Cart Viewed", {
+    seg_client_id: segClientId ? segClientId[0] : undefined,
+    seg_session_id: segSessionId ? segSessionId[0] : undefined,
+    seg_no_cid_session: localStorage.getItem("cidSession"),
+    product: phoneBasket,
+    items: itemBasket,
+    value: totalPrice,
+    currency: "USD",
+    ecommerce: {
+      affiliation: "Demo Phone",
+      currency: "USD",
+      value: totalPrice,
+      items: itemBasket,
+    },
+  })
   const renderSidebar = () => {
     return (
       <div>
@@ -173,7 +196,6 @@ const Basket = ({
                       items: itemList,
                       value: totalPrice,
                       currency: "USD",
-                      //GTM Datalayer config ecommerce object required
                       ecommerce: {
                         affiliation: "Demo Phone",
                         currency: "USD",
@@ -256,31 +278,6 @@ const Basket = ({
         <div className="row">
           <div className="col-md-9">{renderContent()}</div>
           <div className="col-md-3 btn-user-checkout">{renderSidebar()}</div>
-          <script>
-            {analytics.page("Basket", {
-              cart_status: totalPrice ? "Cart Full" : "Cart Empty",
-              seg_client_id: segClientId ? segClientId[0] : undefined,
-              seg_session_id: segSessionId ? segSessionId[0] : undefined,
-              seg_no_cid_session: localStorage.getItem("cidSession"),
-            })}
-            ;
-            {analytics.track("Cart Viewed", {
-              seg_client_id: segClientId ? segClientId[0] : undefined,
-              seg_session_id: segSessionId ? segSessionId[0] : undefined,
-              seg_no_cid_session: localStorage.getItem("cidSession"),
-              product: phoneBasket,
-              items: itemBasket,
-              value: totalPrice,
-              currency: "USD",
-              //GTM Datalayer config ecommerce object required
-              ecommerce: {
-                affiliation: "Demo Phone",
-                currency: "USD",
-                value: totalPrice,
-                items: itemBasket,
-              },
-            })}
-          </script>
         </div>
       </div>
     </div>

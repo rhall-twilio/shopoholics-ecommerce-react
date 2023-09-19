@@ -8,8 +8,9 @@ import {
 } from "../selectors/Phones";
 import phone from "../reducers/phone";
 
-const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
-const segSessionId = cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g);
+
+const segClientId = cookieObjCid !== null ? cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g) : undefined;
+const segSessionId = cookieObjSid !== null ? cookieObjSid.get("_ga_LW0DP01W31").match(/[0-9]{9,10}/g) : undefined;
 export const BasketCart = (props) => {
   const { totalBasketCount, totalPrice, phones } = props;
   let phoneBasket = phones.map((phone) => ({

@@ -1,3 +1,7 @@
+**Setup**
+
+Add your write key to the `analytics.load()` call in `public/index.html`
+
 **To run it:**
 
 ```javascript

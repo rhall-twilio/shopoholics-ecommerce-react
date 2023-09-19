@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Google Tag Manager -->
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-KNG8BTF");
-    </script>
-    <!-- End Google Tag Manager -->
-    <!-- Config gtag for Cloud Mode-->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-LW0DP01W31");
-
-      // capture cid and sid
-      const cookieObjCid = new URLSearchParams(
-        document.cookie.replaceAll("&", "%26").replaceAll("; ", "&")
-      );
-      const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
-
-      const cookieObjSid = new URLSearchParams(
-        document.cookie.replaceAll("&", "%26").replaceAll("; ", "&")
-      );
-      const segSessionId = cookieObjSid
-        .get("_ga_LW0DP01W31")
-        .match(/[0-9]{9,10}$/g);
-    </script>
-    <!-- End gtag for Cloud Mode-->
+        <!-- Google Tag Manager -->
+        <!-- <script>
+          (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+            var f = d.getElementsByTagName(s)[0],
+              j = d.createElement(s),
+              dl = l != "dataLayer" ? "&l=" + l : "";
+            j.async = true;
+            j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+            f.parentNode.insertBefore(j, f);
+          })(window, document, "script", "dataLayer", "GTM-KNG8XXX");
+        </script> -->
+        <!-- End Google Tag Manager -->
+        <!-- Config gtag for Cloud Mode-->
+        <script>
+          // window.dataLayer = window.dataLayer || [];
+          // function gtag() {
+          //   dataLayer.push(arguments);
+          // }
+          // gtag("js", new Date());
+          // gtag("config", "G-LW0DP01XXX");
+    
+          // capture cid and sid
+          const cookieObjCid = new URLSearchParams(
+            document.cookie.replaceAll("&", "%26").replaceAll("; ", "&")
+          );
+          const segClientId = cookieObjCid.get("_ga").match(/[0-9]+\S[0-9]+$/g);
+    
+          const cookieObjSid = new URLSearchParams(
+            document.cookie.replaceAll("&", "%26").replaceAll("; ", "&")
+          );
+          const segSessionId = cookieObjSid
+            .get("_ga_LW0DP01XXX")
+            .match(/[0-9]{9,10}$/g);
+        </script>
+        <!-- End gtag for Cloud Mode-->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -95,7 +95,7 @@
               n.type = "text/javascript";
               n.async = !0;
               n.src =
-                "https://cdn.segment.com/analytics.js/v1/" +
+                "https://cdn.segment.build/analytics.js/v1/" +
                 e +
                 "/analytics.min.js";
               var a = document.getElementsByTagName("script")[0];
@@ -104,12 +104,10 @@
             };
             analytics.SNIPPET_VERSION = "4.15.3";
 
-            //TODO 1.1: update the following line with your write key
-            analytics.load("3DCPQluBOtkLuonpeiOqCRsWYGNaYzWE");
-            //analytics.load("92JvpOXgMlSmzcal6N3HoJKaz2BWWDRf");
-            // Leave it here but don't do the following:
-            // it will create a new anonymous Id when the page is loaded
-            // and ensure userIds are cleared
+            // SETUP: update the following line with your write key
+            // analytics.load("");
+            // 
+            analytics.load("");
             window.analytics.reset();
           }
       })();
